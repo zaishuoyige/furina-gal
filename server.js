@@ -9,9 +9,6 @@ const path = require('path');
 
 const ROOT = __dirname;
 const DEFAULT_PORT = 3000;
-const PRESENCE_PATH = '/__presence';
-const VISITOR_TIMEOUT_MS = 30 * 1000;
-const visitors = new Map();
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -48,48 +45,7 @@ function getFilePath(requestUrl) {
   return filePath;
 }
 
-function getClientIp(req) {
-  const forwarded = req.headers['x-forwarded-for'];
-  const address = Array.isArray(forwarded) ? forwarded[0] : forwarded || req.socket.remoteAddress || 'unknown';
-  const ip = address.split(',')[0].trim();
-  return ip.startsWith('::ffff:') ? ip.slice(7) : ip;
-}
-
-function printVisitors() {
-  const ips = [...visitors.keys()];
-  const visitorLine = `[访问统计] 当前访问人数：${ips.length} | IP：${ips.length ? ips.join(', ') : '暂无'}`;
-  process.stdout.write(`\r\x1b[2K${visitorLine}`);
-}
-
-function touchVisitor(req) {
-  const ip = getClientIp(req);
-  const isNewVisitor = !visitors.has(ip);
-  visitors.set(ip, Date.now());
-  if (isNewVisitor) printVisitors();
-}
-
-function removeInactiveVisitors() {
-  const now = Date.now();
-  let changed = false;
-  for (const [ip, lastSeen] of visitors) {
-    if (now - lastSeen > VISITOR_TIMEOUT_MS) {
-      visitors.delete(ip);
-      changed = true;
-    }
-  }
-  if (changed) printVisitors();
-}
-
 const server = http.createServer((req, res) => {
-  const requestPath = new URL(req.url || '/', 'http://localhost').pathname;
-  touchVisitor(req);
-
-  if (requestPath === PRESENCE_PATH) {
-    res.writeHead(204, { 'Cache-Control': 'no-store' });
-    res.end();
-    return;
-  }
-
   let filePath;
   try {
     filePath = getFilePath(req.url || '/');
@@ -132,12 +88,4 @@ try {
 server.listen(port, '0.0.0.0', () => {
   console.log(`芙宁娜 Galgame 已启动： http://localhost:${port}`);
   console.log('按 Ctrl+C 停止服务');
-  printVisitors();
-});
-
-setInterval(removeInactiveVisitors, 5 * 1000).unref();
-
-process.on('SIGINT', () => {
-  process.stdout.write('\n');
-  process.exit(0);
 });
