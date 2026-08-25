@@ -1,0 +1,10 @@
+{
+  "name": "furina-galgame",
+  "private": true,
+  "description": "芙宁娜 Galgame 本地静态服务",
+  "scripts": {
+    "start": "node server.js",
+    "start:port": "node server.js 3000",
+    "start:sh": "bash start.sh"
+  }
+}
