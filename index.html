@@ -4507,7 +4507,7 @@
       const imgLayer = bgFlip ? $('#bgA') : $('#bgB'), phLayer = bgFlip ? $('#bgA2') : $('#bgB2');
       bgFlip = !bgFlip;
       const showImg = bgFlip ? $('#bgA') : $('#bgB'), showPh = bgFlip ? $('#bgA2') : $('#bgB2');
-      showImg.style.backgroundImage = `url("${A.bg + key}.png")`;
+      showImg.style.backgroundImage = `url("${A.bg + key}.webp")`;
       showPh.className = 'bg-ph on ph-' + key;
       showImg.classList.add('on'); showPh.classList.add('on');
       imgLayer.classList.remove('on'); phLayer.classList.remove('on');
@@ -4587,10 +4587,10 @@
     })();
 
     /* ---------------- 立绘（多角色） ---------------- */
-    /* 用法：芙宁娜 f:'smile' 走 furina_smile.png；
-       NPC 行加 sp:'escoffier'（基础立绘 escoffier.png，可选表情 escoffier_smile.png 等） */
+    /* 用法：芙宁娜 f:'smile' 走 furina_smile.webp；
+       NPC 行加 sp:'escoffier'（基础立绘 escoffier.webp，可选表情 escoffier_smile.webp 等） */
     let curChar = 'furina', curWant = '', curDim = null;
-    const spriteURL = k => 'assets/character/' + k + '.png';
+    const spriteURL = k => 'assets/character/' + k + '.webp';
     function setSprite(char, face, speaking) {
       if (!char) char = 'furina';
       if (!face) face = char === 'furina' ? 'normal' : '';
@@ -5132,16 +5132,16 @@
     $('#asset-body').innerHTML = `
 <p><b>游戏开箱即玩</b>——所有剧情、界面与占位画面均已内置。放入下列素材后刷新页面，即可自动替换。</p>
 <p><b>① 芙宁娜立绘</b>（PNG 透明底，竖图）放入 <code>assets/character/</code>：<br>
-<code>furina_normal / smile / shy / pout / surprise / sad / serious / happy.png</code></p>
+<code>furina_normal / smile / shy / pout / surprise / sad / serious / happy.webp</code></p>
 <p><b>② 背景图</b>（建议 1920×1080）放入 <code>assets/bg/</code>：<br>
-<code>bg_home（主页）/ bg_title（枫丹廷主城）/ bg_night（枫丹廷夜景）/ bg_opera_out（歌剧院外景）/ bg_theater（歌剧院内景）/ bg_evening（傍晚）/ bg_dock（海露港）.png</code></p>
+<code>bg_home（主页）/ bg_title（枫丹廷主城）/ bg_night（枫丹廷夜景）/ bg_opera_out（歌剧院外景）/ bg_theater（歌剧院内景）/ bg_evening（傍晚）/ bg_dock（海露港）.webp</code></p>
 <p><b>③ 音乐</b>放入 <code>assets/bgm/</code>：<br>
 <code>bgm_title / bgm_tea / bgm_rain / bgm_waltz / bgm_end.mp3</code></p>
 <p><b>④ 音效（可选）</b>放入 <code>assets/se/</code>：<code>se_click / se_choice.mp3</code></p>
 <p><b>⑤ 角色语音</b>放入 <code>assets/voice/</code>：文件名与台词的对应关系，点下方按钮查看完整清单（含爱可菲、娜维娅、夏洛蒂等 NPC 台词）。缺失的语音自动静默，可在设置里调音量或关闭。</p>
 <p><b>⑥ NPC 立绘（可选）</b>放入 <code>assets/character/</code>（PNG 透明底，竖图）：<br>
-<code>escoffier.png（爱可菲）/ navia.png（娜维娅）/ charlotte.png（夏洛蒂）</code><br>
-可选表情变体如 <code>navia_smile.png</code>，缺省自动回退到基础立绘；全部缺失时显示占位框，不影响游玩。</p>`;
+<code>escoffier.webp（爱可菲）/ navia.webp（娜维娅）/ charlotte.webp（夏洛蒂）</code><br>
+可选表情变体如 <code>navia_smile.webp</code>，缺省自动回退到基础立绘；全部缺失时显示占位框，不影响游玩。</p>`;
 
     /* ---------------- 键盘 ---------------- */
     document.addEventListener('keydown', e => {
